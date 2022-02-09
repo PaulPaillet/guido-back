@@ -2,7 +2,7 @@ from os.path import curdir, join as pjoin
 from charset_normalizer import detect
 from scipy.io import wavfile
 
-wav_fname = pjoin(curdir, 'recWav/sollong2.wav')
+wav_fname = pjoin(curdir, 'recWav/doremifasol.wav')
 
 samplerate, data = wavfile.read(wav_fname)
 print(f"number of channels = {data.shape[1]}")
@@ -32,7 +32,7 @@ c = 0
 # 1000-1050 : [0 1]
 l = []
 seuil = 0
-son = 0
+son = 1
 tab = []
 # for long notes, reduce the limit of 500
 
@@ -75,10 +75,11 @@ for t in tab:
     print(data)
 
     length = data.shape[0] / samplerate
+
     #print(f"length = {length}s")
     #print(data.shape[0])
     time = np.linspace(0., length, data.shape[0])
-
+    print("Le son " +str(son) + " dure " + str(round(length,2))+"s")
     plt.plot(time, data[:, 0], label="Left channel")
     plt.plot(time, data[:, 1], label="Right channel")
     plt.legend()
