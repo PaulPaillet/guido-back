@@ -22,12 +22,17 @@ def test():
     return res
 
 
+@app.route('/oui')
+def oui():
+    a = notedetection.testFileTObite()
+    return json.dumps(a)
+
 @app.route('/process', methods=['POST'])
 def process():
     req = request.get_json()
     body = models.Body(**req)
-    note = notedetection.processNote(body)
-    return json.dumps(models.Dto(note="mi").__dict__)
+    note = notedetection.processNoteByFile(body)
+    return json.dumps(models.Dto(note=note).__dict__)
 
 
 if __name__ == '__main__':
