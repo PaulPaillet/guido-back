@@ -18,16 +18,16 @@ print(data.shape[0])
 #######
 # Plot
 
-import matplotlib.pyplot as plt
-import numpy as np
+#import matplotlib.pyplot as plt
+#import numpy as np
 
-time = np.linspace(0., length, data.shape[0])
-plt.plot(time, data[:, 0], label="Left channel")
-plt.plot(time, data[:, 1], label="Right channel")
-plt.legend()
-plt.xlabel("Time [s]")
-plt.ylabel("Amplitude")
-plt.show()
+#time = np.linspace(0., length, data.shape[0])
+#plt.plot(time, data[:, 0], label="Left channel")
+#plt.plot(time, data[:, 1], label="Right channel")
+#plt.legend()
+#plt.xlabel("Time [s]")
+#plt.ylabel("Amplitude")
+#plt.show()
 
 ##########
 # Deleting blanc noise

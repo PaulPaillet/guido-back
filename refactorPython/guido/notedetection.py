@@ -88,11 +88,11 @@ def processNoteByFile(body):
 
     
     time = np.linspace(0., length, datate.shape[0])
-    plt.plot(time, datate, label="Left channel")
-    plt.legend()
-    plt.xlabel("Time [s]")
-    plt.ylabel("Amplitude")
-    plt.show()
+    #plt.plot(time, datate, label="Left channel")
+    #plt.legend()
+    #plt.xlabel("Time [s]")
+    #plt.ylabel("Amplitude")
+    #plt.show()
 
     ##########
     # Deleting blanc noise
@@ -133,7 +133,6 @@ def processNoteByFile(body):
         #print(f"number of channels = {data.shape[1]}")
 
         length1 = data1.shape[0] / samplerate1
-
 
         longueurNoteTab += str(length1) + " "
 
