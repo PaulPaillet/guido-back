@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Sounds ###
+refactorPython/guido/reg.wav
+refactorPython/guido/reg.3gp
