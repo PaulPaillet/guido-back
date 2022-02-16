@@ -1,12 +1,10 @@
 import speech_recognition as sr
 import array
-import ffmpeg
-from pydub import AudioSegment
+import os
 
 def functionPourTEst(input):
     input.test = "ich ich"
     return input
-
 
 def translate(input):
     return (256+input)%256
@@ -20,7 +18,6 @@ def testFileTObite():
     data = sr.AudioData(byte_array, 11025 , 4)
     result = r.recognize_google(data, language="fr-FR")
     return result
-
 
 def testFile():
     byte_array = array.array('B')
@@ -61,12 +58,13 @@ def processNoteByFile(body):
         tmp.append(translate(body.value[i]))
     byte_array = array.array('B')
     byte_array.fromlist(tmp)
-    f = open('reg.wav', 'wb')
+    f = open('reg.3gp', 'wb')
     f.write(byte_array)
     f.close()
     filename = 'reg.wav'
+    os.system('ffmpeg -i reg.3gp reg.wav')
     r = sr.Recognizer()
-    data ="noop"
+    data = "null"
     with sr.AudioFile(filename) as source:
         audio = r.record(source)
         try:
