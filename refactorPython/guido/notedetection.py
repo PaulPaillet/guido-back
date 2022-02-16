@@ -11,7 +11,7 @@ def translate(input):
 
 def testFileTObite():
     byte_array = array.array('B')
-    audio_file = open('notes.flac', 'rb')
+    audio_file = open('notes_test.flac', 'rb')
     byte_array.fromstring(audio_file.read())
     audio_file.close()
     r = sr.Recognizer()
@@ -21,7 +21,7 @@ def testFileTObite():
 
 def testFile():
     byte_array = array.array('B')
-    audio_file = open('notes.flac', 'rb')
+    audio_file = open('notes_test.flac', 'rb')
     byte_array.fromstring(audio_file.read())
     #audio_file.close()
     r = sr.Recognizer()
@@ -53,16 +53,26 @@ def processNote(body):
     return result
 
 def processNoteByFile(body):
+    # Get bytes array from the app
+    # The app register sound as .3gp
+    # Then send it as a bytes array
     tmp = []
     for i in range(0, len(body.value)):
         tmp.append(translate(body.value[i]))
     byte_array = array.array('B')
     byte_array.fromlist(tmp)
-    f = open('reg.3gp', 'wb')
-    f.write(byte_array)
-    f.close()
+
+    # Store bytes array in a file to recognize and convert it
+    with open('reg.3gp', 'wb') as f:
+        f.write(byte_array)
+
+    # Convert .3gp to .wav
     filename = 'reg.wav'
+    if os.path.exists(filename):
+        os.remove(filename)
     os.system('ffmpeg -i reg.3gp reg.wav')
+
+    # Start recognition
     r = sr.Recognizer()
     data = "null"
     with sr.AudioFile(filename) as source:
