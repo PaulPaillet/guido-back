@@ -37,7 +37,7 @@ def testFile():
         audio = r.record(source)
         try:
             data = r.recognize_google(audio, language="fr-FR")
-            print(data)
+            #print(data)
         except:
             print("Please try again")
     #data = sr.AudioData(byte_array, 32532, 1)
@@ -110,7 +110,7 @@ def processNoteByFile(body):
             detectNote = True
             l.append(d)
         elif seuil < 3000 and detectNote:
-            print(seuil)
+            #print(seuil)
             l.append(d)
             seuil +=1
         else:
@@ -125,27 +125,6 @@ def processNoteByFile(body):
 
     longueurNoteTab = ""
 
-    for t in tab:
-        data_bis = np.array(np.array(t))
-        wavfile.write(str(son) + ".wav", samplerate, data_bis.astype(np.int16))
-        wav_fname1 = pjoin(curdir, str(son) +'.wav')
-        samplerate1, data1 = wavfile.read(wav_fname1)
-        #print(f"number of channels = {data.shape[1]}")
-
-        length1 = data1.shape[0] / samplerate1
-
-        longueurNoteTab += str(length1) + " "
-
-        #print(f"length = {length}s")
-        #print(data.shape[0])
-        time = np.linspace(0., length1, datate.shape[0])
-        print("Le son " +str(son) + " dure " + str(round(length1,2))+"s")
-        son +=1
-
-    for long in longueurNoteTab:
-        print(long)
-
-
     # Start recognition
     r = sr.Recognizer()
     data = "null"
@@ -157,4 +136,31 @@ def processNoteByFile(body):
             print(data)
         except:
             print("Please try again")
+    
+    nbMots = len(data.split())
+    print("mots detectes : ")
+    print(nbMots)
+    for t in tab:
+        data_bis = np.array(np.array(t))
+        wavfile.write(str(son) + ".wav", samplerate, data_bis.astype(np.int16))
+        wav_fname1 = pjoin(curdir, str(son) +'.wav')
+        samplerate1, data1 = wavfile.read(wav_fname1)
+        #print(f"number of channels = {data.shape[1]}")
+
+        length1 = data1.shape[0] / samplerate1
+
+        if son-1 < nbMots:
+            longueurNoteTab += str(length1) + " "
+
+        #print(f"length = {length}s")
+        #print(data.shape[0])
+        time = np.linspace(0., length1, datate.shape[0])
+        print("Le son " +str(son) + " dure " + str(round(length1,2))+"s")
+        son +=1
+
+    while son-1 < nbMots:
+        longueurNoteTab += "1" + " "
+        son +=1
+
+
     return data + " " + longueurNoteTab
